@@ -10,6 +10,13 @@ describe('Utils', () => {
             expect(actual).toBe(expected)
         })
     })
+    test('should return an error if no value provided', () => {
+        function expectedError() {
+            const sut = new StringUtils()
+            const actual = sut.getStringInfo('')
+        }
+        expect(expectedError).toThrow()
+    })
 
     describe('getStringInfo for random_text should', () => {
         let sut: StringUtils;
