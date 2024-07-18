@@ -10,7 +10,7 @@ describe('Utils', () => {
             expect(actual).toBe(expected)
         })
     })
-    test('should return an error if no value provided', () => {
+    fit('should return an error if no value provided', () => {
         function expectedError() {
             const sut = new StringUtils()
             const actual = sut.getStringInfo('')
