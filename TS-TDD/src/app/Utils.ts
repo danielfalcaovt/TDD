@@ -12,6 +12,9 @@ export type StringInfo = {
 
 export class StringUtils {
     getStringInfo(text: string) {
+        if (!text) {
+            throw new Error('missing string param')
+        }
         return {
             lowerCase: text.toLowerCase(),
             upperCase: text.toUpperCase(),
