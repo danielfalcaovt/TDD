@@ -10,12 +10,14 @@ export type StringInfo = {
     extraInfo?: Object
 }
 
-export function getStringInfo(text: string): StringInfo {
-    return {
-        lowerCase: text.toLowerCase(),
-        upperCase: text.toUpperCase(),
-        characters: Array.from(text),
-        length: text.length,
-        extraInfo: {}
+export class StringUtils {
+    getStringInfo(text: string) {
+        return {
+            lowerCase: text.toLowerCase(),
+            upperCase: text.toUpperCase(),
+            characters: Array.from(text),
+            length: text.length,
+            extraInfo: {}
+        }
     }
 }
