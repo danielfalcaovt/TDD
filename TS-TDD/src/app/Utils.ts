@@ -15,6 +15,7 @@ export function getStringInfo(text: string): StringInfo {
         lowerCase: text.toLowerCase(),
         upperCase: text.toUpperCase(),
         characters: Array.from(text),
-        length: text.length
+        length: text.length,
+        extraInfo: {}
     }
 }
