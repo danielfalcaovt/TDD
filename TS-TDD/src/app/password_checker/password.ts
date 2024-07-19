@@ -13,5 +13,9 @@ export class PasswordChecker implements IPasswordChecker {
         if (!this.uppercaseRegex.test(password)) {
             return false
         }
+
+        if (!this.lowercaseRegex.test(password)) {
+            return false
+        }
     }
 }

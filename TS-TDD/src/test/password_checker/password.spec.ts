@@ -18,4 +18,10 @@ describe('Password Checker', () => {
         const actual = sut.check(request)
         expect(actual).toBe(false)
     })
+
+    it ('Should return false if password has not lowercase letter', () => {
+        const request = 'INVALID_PASSWORD'
+        const actual = sut.check(request)
+        expect(actual).toBe(false)
+    })
 })
