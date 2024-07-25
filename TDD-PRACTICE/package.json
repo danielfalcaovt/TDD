@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "ts-jest": "^29.2.3",
+    "ts-node": "^10.9.2"
+  },
+  "name": "tdd-practice",
+  "version": "1.0.0",
+  "main": "jest.config.js",
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
