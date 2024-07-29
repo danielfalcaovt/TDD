@@ -10,11 +10,8 @@
     "sourceMap": true, // mapeia aonde o javascript compilou do typescript
     "rootDir": "<rootDir>/src",
   },
-  "parserOptions": {
-    "project": "<rootDir>/src"
-  },
   "include": [
-    "src"
+    "<rootDir>/src"
   ],
   "exclude": [ // evita buildar os arquivos de teste
     "**/*.spec.ts",
