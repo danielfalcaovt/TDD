@@ -1,0 +1,31 @@
+{
+  "name": "solid-tdd2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "lint-staged": {
+    "*.ts": [
+      "eslint 'src/**/*.ts' --fix",
+      "npm run test:staged"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-love": "^62.0.0",
+    "git-commit-msg-linter": "^5.0.8",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.7",
+    "ts-jest": "^29.2.3",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.12"
+  }
+}
