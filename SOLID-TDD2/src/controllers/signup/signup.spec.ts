@@ -1,5 +1,5 @@
 import { MissingParamError } from "../errors/missing-param-error"
-import { badRequest } from "../helpers/http-helpers"
+import { badRequest } from "../helpers/http/http-helpers"
 import { SignUpController } from "./signup"
 
 const makeSut = () => {
