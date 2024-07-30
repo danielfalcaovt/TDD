@@ -17,7 +17,6 @@ export class SignUpController implements Controller {
             if (error) {
                 return new Promise(resolve => resolve(badRequest(error)))
             }
-            
             const { confirmPassword, ...account } = httpRequest.body
             const user = await this.addAccount.add(account)
             return new Promise(resolve => resolve(ok(user)))
