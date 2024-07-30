@@ -1,6 +1,6 @@
 import { IAddAccount } from "../../domain/models/add-account";
 import { MissingParamError } from "../errors/missing-param-error";
-import { badRequest, serverError } from "../helpers/http/http-helpers";
+import { badRequest, ok, serverError } from "../helpers/http/http-helpers";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 import { IValidation } from "../protocols/validator";
@@ -19,8 +19,8 @@ export class SignUpController implements Controller {
             }
             
             const { confirmPassword, ...account } = httpRequest.body
-            await this.addAccount.add(account)
-            return new Promise(resolve => resolve({statusCode: 200}))
+            const user = await this.addAccount.add(account)
+            return new Promise(resolve => resolve(ok(user)))
         } catch(err) {
             return new Promise(resolve => resolve(serverError()))
         }
