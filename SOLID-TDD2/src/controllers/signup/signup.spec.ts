@@ -1,7 +1,7 @@
 import { IAddAccount, IAddAccountModel } from "../../domain/models/add-account"
 import { IAccountModel } from "../../domain/protocols/account"
 import { MissingParamError } from "../errors/missing-param-error"
-import { badRequest, serverError } from "../helpers/http/http-helpers"
+import { badRequest, ok, serverError } from "../helpers/http/http-helpers"
 import { IValidation } from "../protocols/validator"
 import { SignUpController } from "./signup"
 
@@ -88,5 +88,15 @@ describe('SignUp CTL', () => {
         })
         const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(serverError())
+    })
+    it('Should return an account on addAccount succeed', async () => {
+        const { sut } = makeSut()
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(ok({
+            id: 'valid_id',
+            name: 'any_name',
+            email: 'valid_mail@mail.com',
+            password: 'valid_password'
+        }))
     })
 })
