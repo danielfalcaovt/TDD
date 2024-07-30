@@ -65,4 +65,14 @@ describe('DbAddAccount', () => {
         const promise = sut.add(makeFakeRequest())
         await expect(promise).rejects.toThrow()
     })
+    it('Should call addAccountRepository with correct values', async () => {
+        const { sut, addAccountRepoStub } = makeSut()
+        const addSpy = jest.spyOn(addAccountRepoStub, 'add')
+        await sut.add(makeFakeRequest())
+        expect(addSpy).toHaveBeenCalledWith({
+            email: 'any_mail@mail.com',
+            name: 'any_name',
+            password: 'hashed_value'
+        })
+    })
 })
