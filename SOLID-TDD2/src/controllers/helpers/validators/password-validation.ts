@@ -7,6 +7,11 @@ export class PasswordValidation implements IValidation {
         if (data.password.length < this.minLength) {
             return new InvalidParamError('password length')
         }
+
+        if (data.password.toLowerCase() ===  data.password) {
+            return new InvalidParamError('password uppercase')
+        }
+
         return null
     }
 }
