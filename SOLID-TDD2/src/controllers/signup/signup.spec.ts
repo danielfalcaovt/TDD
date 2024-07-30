@@ -1,7 +1,7 @@
 import { IAddAccount, IAddAccountModel } from "../../domain/models/add-account"
 import { IAccountModel } from "../../domain/protocols/account"
 import { MissingParamError } from "../errors/missing-param-error"
-import { badRequest } from "../helpers/http/http-helpers"
+import { badRequest, serverError } from "../helpers/http/http-helpers"
 import { IValidation } from "../protocols/validator"
 import { SignUpController } from "./signup"
 
@@ -72,5 +72,13 @@ describe('SignUp CTL', () => {
         const addSpy = jest.spyOn(addAccountStub, 'add')
         await sut.handle(makeFakeRequest())
         expect(addSpy).toHaveBeenCalledWith(makeFakeAccount())
+    })
+    it('Should return 500 if addAccount throws', async () => {
+        const { sut, addAccountStub } = makeSut()
+        jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(serverError())
     })
 })
