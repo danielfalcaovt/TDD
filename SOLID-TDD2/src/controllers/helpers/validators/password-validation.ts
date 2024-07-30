@@ -11,9 +11,14 @@ export class PasswordValidation implements IValidation {
         if (data.password.toLowerCase() ===  data.password) {
             return new InvalidParamError('password uppercase')
         }
-
+        
         if (data.password.toUpperCase() === data.password) {
             return new InvalidParamError('password lowercase')
+        }
+        
+        const specialCharRegex = new RegExp('\W', 'gm')
+        if(!specialCharRegex.test(data.password)) {
+            return new InvalidParamError('password scharacter')
         }
 
         return null
