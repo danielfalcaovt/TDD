@@ -11,4 +11,13 @@ describe('CompareFields Validation', () => {
         const response = sut.validate(request)
         expect(response).toEqual(new InvalidParamError('secondField'))
     })
+    it ('Should not return if fields are equal', () => {
+        const sut = new CompareFieldsValidation('firstField', 'secondField')
+        const request = {
+            firstField: 'any_value',
+            secondField: 'any_value'
+        }
+        const response = sut.validate(request)
+        expect(response).toBeFalsy()
+    })
 })
