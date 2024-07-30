@@ -1,3 +1,4 @@
+import { ok } from '../../../controllers/helpers'
 import { IAddAccount, IAddAccountModel } from '../../../domain/models/add-account'
 import { IAccountModel } from '../../../domain/protocols/account'
 import { IAddAccountRepository } from '../../protocols/iadd-account-repository'
@@ -82,5 +83,10 @@ describe('DbAddAccount', () => {
         }))
         const promise = sut.add(makeFakeRequest())
         expect(promise).rejects.toThrow()
+    })
+    it('Should return an account on succeed', async () => {
+        const { sut } = makeSut()
+        const response = await sut.add(makeFakeRequest())
+        expect(response).toEqual(makeFakeAccount())
     })
 })
