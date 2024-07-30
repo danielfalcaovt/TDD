@@ -1,8 +1,4 @@
-import { ok } from "../../../controllers/helpers";
-import { IAddAccount, IAddAccountModel } from "../../../domain/models/add-account";
-import { IAccountModel } from "../../../domain/protocols/account";
-import { IAddAccountRepository } from "../../protocols/iadd-account-repository";
-import { IHasher } from "../../protocols/ihasher";
+import { IAccountModel, IAddAccount, IAddAccountModel, IAddAccountRepository, IHasher } from './db-add-account-protocols'
 
 export class DbAddAccount implements IAddAccount {
     constructor(

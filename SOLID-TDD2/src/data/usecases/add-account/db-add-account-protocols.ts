@@ -1,0 +1,5 @@
+export * from '../../../domain/models/add-account'
+export * from '../../../domain/protocols/account'
+export * from '../../protocols/iadd-account-repository'
+export * from '../../protocols/ihasher'
+export * from './db-add-account'

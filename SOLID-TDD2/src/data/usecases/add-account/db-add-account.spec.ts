@@ -1,9 +1,4 @@
-import { ok } from '../../../controllers/helpers'
-import { IAddAccount, IAddAccountModel } from '../../../domain/models/add-account'
-import { IAccountModel } from '../../../domain/protocols/account'
-import { IAddAccountRepository } from '../../protocols/iadd-account-repository'
-import { IHasher } from '../../protocols/ihasher'
-import { DbAddAccount } from './db-add-account'
+import { DbAddAccount, IAccountModel, IAddAccount, IAddAccountModel, IAddAccountRepository, IHasher } from './db-add-account-protocols'
 
 interface SutTypes {
     sut: DbAddAccount
