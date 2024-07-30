@@ -46,4 +46,9 @@ describe('EmailValidator', () => {
         })
         expect(sut.validate).toThrow()
     })
+    it('Should not return if email is correct', () => {
+        const { sut } = makeSut()
+        const response = sut.validate(randomMail)
+        expect(response).toBeFalsy()
+    })
 })
