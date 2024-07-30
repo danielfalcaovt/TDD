@@ -1,3 +1,4 @@
+import { InvalidParamError } from "../../errors/invalid-param-error"
 import { IEmailValidator, IValidation } from "../../protocols"
 import { EmailValidator } from "./email-validator"
 
@@ -31,5 +32,11 @@ describe('EmailValidator', () => {
         const validateSpy = jest.spyOn(emailValidatorStub, 'isValid')
         sut.validate(randomMail)
         expect(validateSpy).toHaveBeenCalledWith(randomMail)
+    })
+    it('Should return an error if emailValidator fails', () => {
+        const { sut, emailValidatorStub } = makeSut()
+        jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+        const error = sut.validate(randomMail)
+        expect(error).toEqual(new InvalidParamError('email'))
     })
 })
