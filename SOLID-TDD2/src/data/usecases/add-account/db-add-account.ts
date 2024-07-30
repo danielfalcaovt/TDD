@@ -1,3 +1,4 @@
+import { ok } from "../../../controllers/helpers";
 import { IAddAccount, IAddAccountModel } from "../../../domain/models/add-account";
 import { IAccountModel } from "../../../domain/protocols/account";
 import { IAddAccountRepository } from "../../protocols/iadd-account-repository";
@@ -10,12 +11,7 @@ export class DbAddAccount implements IAddAccount {
     ) {}
     async add(account: IAddAccountModel): Promise<IAccountModel> {
         const hashedValue = await this.hasherStub.hash(account.password)
-        await this.addAccountRepo.add(Object.assign({}, account, { password: hashedValue }))
-        return new Promise(resolve =>resolve({
-            email: 'any_mail',
-            id: 'any_id',
-            name: 'any_name',
-            password: 'any_password'
-        }))
+        const user = await this.addAccountRepo.add(Object.assign({}, account, { password: hashedValue }))
+        return user
     }
 }
