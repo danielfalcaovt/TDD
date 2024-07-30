@@ -17,6 +17,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/validator": "^13.12.0",
     "eslint": "^8.57.0",
     "eslint-config-love": "^62.0.0",
@@ -28,6 +29,7 @@
     "validator": "^13.12.0"
   },
   "dependencies": {
-    "@types/jest": "^29.5.12"
+    "@types/jest": "^29.5.12",
+    "bcrypt": "^5.1.1"
   }
 }
