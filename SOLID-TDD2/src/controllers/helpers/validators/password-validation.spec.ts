@@ -26,4 +26,12 @@ describe('PasswordValidation', () => {
         const response = sut.validate(request)
         expect(response).toEqual(new InvalidParamError('password lowercase'))
     })
+    it('Should return an error if password has not special character', () => {
+        const sut = new PasswordValidation(8)
+        const request = {
+            password: 'Invalid_password@'
+        }
+        const response = sut.validate(request)
+        expect(response).toEqual(new InvalidParamError('password scharacter'))
+    })
 })
