@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   {
     ...[].concat(config),
-    files: ['**/*.js'],
+    files: ['**/*.ts'],
     extends: [tseslint.configs.disableTypeChecked],
   },
 );
