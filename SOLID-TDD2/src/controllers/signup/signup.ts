@@ -11,13 +11,13 @@ export class SignUpController implements Controller {
         try {
             const error = this.validator.validate(httpRequest.body)
             if (error) {
-                return new Promise(resolve => resolve(badRequest(error)))
+                return badRequest(error)
             }
             const { confirmPassword, ...account } = httpRequest.body
             const user = await this.addAccount.add(account)
-            return new Promise(resolve => resolve(ok(user)))
+            return ok(user)
         } catch(err) {
-            return new Promise(resolve => resolve(serverError()))
+            return serverError()
         }
     }
 }
