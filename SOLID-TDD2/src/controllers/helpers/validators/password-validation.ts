@@ -12,6 +12,10 @@ export class PasswordValidation implements IValidation {
             return new InvalidParamError('password uppercase')
         }
 
+        if (data.password.toUpperCase() === data.password) {
+            return new InvalidParamError('password lowercase')
+        }
+
         return null
     }
 }
