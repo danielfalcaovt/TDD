@@ -67,6 +67,14 @@ describe('SignUp CTL', () => {
         const httpRequest = await sut.handle(makeFakeRequest())
         expect(httpRequest).toEqual(badRequest(new MissingParamError('name')))
     })
+    it('Should return 500 if validation throws', async () => {
+        const { sut, validatorStub } = makeSut()
+        jest.spyOn(validatorStub, 'validate').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(serverError())
+    })
     it('Should call addAccount with correct values', async () => {
         const { sut, addAccountStub } = makeSut()
         const addSpy = jest.spyOn(addAccountStub, 'add')
