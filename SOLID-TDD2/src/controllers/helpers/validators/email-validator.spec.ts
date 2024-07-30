@@ -1,0 +1,35 @@
+import { IEmailValidator, IValidation } from "../../protocols"
+import { EmailValidator } from "./email-validator"
+
+interface SutTypes {
+    sut: IValidation
+    emailValidatorStub: IEmailValidator
+}
+
+const makeSut = (): SutTypes => {
+    const emailValidatorStub = makeEmailValidatorStub()
+    const sut = new EmailValidator(emailValidatorStub)
+    return {
+        sut,
+        emailValidatorStub
+    }
+}
+
+const makeEmailValidatorStub = () => {
+    class EmailValidatorStub implements IEmailValidator {
+        isValid(email: string): boolean {
+            return true
+        }
+    }
+    return new EmailValidatorStub()
+}
+
+describe('EmailValidator', () => {
+    const randomMail = { email: 'any_mail@mail.com' }
+    it('Should call validate with correct values', () => {
+        const { sut, emailValidatorStub } = makeSut()
+        const validateSpy = jest.spyOn(emailValidatorStub, 'isValid')
+        sut.validate(randomMail)
+        expect(validateSpy).toHaveBeenCalledWith(randomMail)
+    })
+})
