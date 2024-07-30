@@ -1,5 +1,4 @@
 import { IAddAccountModel } from "../../../../domain/models/add-account"
-import { IAccountModel } from "../../../../domain/protocols/account"
 import { PgHelper } from "../../helpers/pg-helper"
 import { PgAccountRepository } from "./account-repository"
 
@@ -18,7 +17,7 @@ describe('PgAccountRepository', () => {
     beforeAll(async () => {
         PgHelper.connect()
     })
-    beforeEach(async () => {
+    afterEach(async () => {
         await PgHelper.client.query('DELETE FROM users')
     })
     afterAll(async () => {
@@ -31,5 +30,13 @@ describe('PgAccountRepository', () => {
         expect(account.email).toBe('any_mail@mail.com')
         expect(account.name).toBe('any_name')
         expect(account.password).toBe('hashed_password')
+    })
+    it('Should throw if query throws', async () => {
+        const sut = makeSut()
+        jest.spyOn(PgHelper, 'query').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const promise = sut.add(makeFakeAccount())
+        expect(promise).rejects.toThrow()
     })
 })
