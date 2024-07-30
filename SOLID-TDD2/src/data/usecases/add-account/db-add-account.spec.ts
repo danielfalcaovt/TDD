@@ -23,7 +23,7 @@ const makeSut = (): SutTypes => {
 
 const makeHasherStub = (): IHasher => {
     class HasherStub implements IHasher {
-        hash(value: string): Promise<string> {
+        async hash(value: string): Promise<string> {
             return new Promise(resolve => resolve('hashed_value'))
         }
     }
@@ -58,5 +58,11 @@ describe('DbAddAccount', () => {
         const hasherSpy = jest.spyOn(hasherStub, 'hash')
         await sut.add(makeFakeRequest())
         expect(hasherSpy).toHaveBeenCalledWith('any_password')
+    })
+    it('Should throw if hasher throws', async () => {
+        const { sut, hasherStub } = makeSut()
+        jest.spyOn(hasherStub, 'hash').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+        const promise = sut.add(makeFakeRequest())
+        await expect(promise).rejects.toThrow()
     })
 })
