@@ -1,0 +1,12 @@
+import { InvalidParamError } from "../../errors/invalid-param-error";
+import { IValidation } from "../../protocols";
+
+export class PasswordValidation implements IValidation {
+    constructor(private readonly minLength: number) {}
+    validate(data: any): Error | null {
+        if (data.password.length < this.minLength) {
+            return new InvalidParamError('password length')
+        }
+        return null
+    }
+}
