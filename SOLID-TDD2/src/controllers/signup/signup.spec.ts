@@ -62,10 +62,10 @@ const makeFakeRequest = () => ({
 })
 describe('SignUp CTL', () => {
     it('Should return error if validation returns an error', async () => {
-        const { sut, validatorStub }= makeSut()
+        const { sut, validatorStub } = makeSut()
         jest.spyOn(validatorStub, 'validate').mockReturnValueOnce(new MissingParamError('name'))
-        const httpRequest = await sut.handle(makeFakeRequest())
-        expect(httpRequest).toEqual(badRequest(new MissingParamError('name')))
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
     })
     it('Should return 500 if validation throws', async () => {
         const { sut, validatorStub } = makeSut()
