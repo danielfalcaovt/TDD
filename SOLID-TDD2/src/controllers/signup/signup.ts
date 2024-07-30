@@ -1,9 +1,5 @@
 import { IAddAccount } from "../../domain/models/add-account";
-import { MissingParamError } from "../errors/missing-param-error";
-import { badRequest, ok, serverError } from "../helpers/http/http-helpers";
-import { Controller } from "../protocols/controller";
-import { HttpRequest, HttpResponse } from "../protocols/http";
-import { IValidation } from "../protocols/validator";
+import { Controller, HttpRequest, HttpResponse, IValidation, badRequest, ok, serverError } from './signup-protocols'
 
 export class SignUpController implements Controller {
     constructor(

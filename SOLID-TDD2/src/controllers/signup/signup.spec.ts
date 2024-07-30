@@ -81,14 +81,6 @@ describe('SignUp CTL', () => {
         await sut.handle(makeFakeRequest())
         expect(addSpy).toHaveBeenCalledWith(makeFakeAccount())
     })
-    it('Should return 500 if addAccount throws', async () => {
-        const { sut, addAccountStub } = makeSut()
-        jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
-            throw new Error()
-        })
-        const httpResponse = await sut.handle(makeFakeRequest())
-        expect(httpResponse).toEqual(serverError())
-    })
     it('Should return an account on addAccount succeed', async () => {
         const { sut } = makeSut()
         const httpResponse = await sut.handle(makeFakeRequest())
@@ -98,5 +90,13 @@ describe('SignUp CTL', () => {
             email: 'valid_mail@mail.com',
             password: 'valid_password'
         }))
+    })
+    it('Should return 500 if addAccount throws', async () => {
+        const { sut, addAccountStub } = makeSut()
+        jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(serverError())
     })
 })
