@@ -8,8 +8,13 @@ export class DbAddAccount implements IAddAccount {
         private readonly hasherStub: IHasher,
         private readonly addAccountRepo: IAddAccountRepository
     ) {}
-    add(account: IAddAccountModel): Promise<IAccountModel> {
-        const hashedValue = this.hasherStub.hash(account.password)
-        return new Promise(resolve =>resolve({} as any))
+    async add(account: IAddAccountModel): Promise<IAccountModel> {
+        const hashedValue = await this.hasherStub.hash(account.password)
+        return new Promise(resolve =>resolve({
+            email: 'any_mail',
+            id: 'any_id',
+            name: 'any_name',
+            password: 'any_password'
+        }))
     }
 }
