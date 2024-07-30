@@ -33,4 +33,11 @@ describe('Validation Composite', () => {
         const error = sut.validate({ field: 'any_field' })
         expect(error).toEqual(new Error())
     })
+    it('Should throw if any validation throws', () => {
+        const { sut, validators } = makeSut()
+        jest.spyOn(validators[0], 'validate').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        expect(sut.validate).toThrow()
+    })
 })
