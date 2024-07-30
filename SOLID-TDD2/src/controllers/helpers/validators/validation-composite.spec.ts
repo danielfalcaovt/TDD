@@ -1,3 +1,4 @@
+import { MissingParamError } from "../../errors/missing-param-error"
 import { IValidation } from "../../protocols/validator"
 import { ValidationComposite } from "./validation-composite"
 
@@ -32,6 +33,13 @@ describe('Validation Composite', () => {
         jest.spyOn(validators[0], 'validate').mockReturnValueOnce(new Error())
         const error = sut.validate({ field: 'any_field' })
         expect(error).toEqual(new Error())
+    })
+    it('Should return the first error if more than one validation fails', () => {
+        const { sut, validators } = makeSut()
+        jest.spyOn(validators[0], 'validate').mockReturnValueOnce(new MissingParamError('any_param'))
+        jest.spyOn(validators[1], 'validate').mockReturnValueOnce(new Error())
+        const error = sut.validate({ field: 'any_field' })
+        expect(error).toEqual(new MissingParamError('any_param'))
     })
     it('Should throw if any validation throws', () => {
         const { sut, validators } = makeSut()
