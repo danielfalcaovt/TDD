@@ -16,7 +16,7 @@ export class PasswordValidation implements IValidation {
             return new InvalidParamError('password lowercase')
         }
         
-        const specialCharRegex = new RegExp('\W', 'gm')
+        const specialCharRegex = /^(?=.*\W)(?=.*[a-zA-Z]).{8,}$/gm
         if(!specialCharRegex.test(data.password)) {
             return new InvalidParamError('password scharacter')
         }
