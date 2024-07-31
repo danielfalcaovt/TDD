@@ -31,7 +31,7 @@ describe('EmailValidator', () => {
         const { sut, emailValidatorStub } = makeSut()
         const validateSpy = jest.spyOn(emailValidatorStub, 'isValid')
         sut.validate(randomMail)
-        expect(validateSpy).toHaveBeenCalledWith(randomMail)
+        expect(validateSpy).toHaveBeenCalledWith(randomMail.email)
     })
     it('Should return an error if emailValidator fails', () => {
         const { sut, emailValidatorStub } = makeSut()
