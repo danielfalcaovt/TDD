@@ -8,7 +8,16 @@ describe('ContentType', () => {
             res.send('')
         })
         await request(app)
-        .get('/content_type_json')
-        .expect('content-type', /json/)
+            .get('/content_type_json')
+            .expect('content-type', /json/)
+    })
+    it('Should type be xml on need', async () => {
+        app.get('/content_type_xml', (req: Request, res: Response) => {
+            res.type('xml')
+            res.send('')
+        })
+        await request(app)
+            .get('/content_type_xml')
+            .expect('content-type', /xml/)
     })
 })
