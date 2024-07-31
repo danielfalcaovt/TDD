@@ -18,7 +18,7 @@ describe('PgAccountRepository', () => {
         PgHelper.connect()
     })
     afterEach(async () => {
-        await PgHelper.client.query('DELETE FROM users')
+        await PgHelper.query('DELETE FROM users')
     })
     afterAll(async () => {
         PgHelper.disconnect()
