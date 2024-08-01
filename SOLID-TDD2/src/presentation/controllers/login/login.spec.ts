@@ -1,6 +1,6 @@
 import { AuthenticationModel, IAuthentication } from "../../../domain/usecases/authentication"
 import { MissingParamError } from "../../errors"
-import { badRequest, serverError, unauthorized } from "../../helpers"
+import { badRequest, ok, serverError, unauthorized } from "../../helpers"
 import { HttpRequest, IValidation } from "../../protocols"
 import { LoginController } from "./login"
 
@@ -86,5 +86,10 @@ describe('Login', () => {
         }))
         const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(serverError())
+    })
+    it('Should return an token if authentication succeed', async () => {
+        const { sut, authenticationStub } = makeSut()
+        const response = await sut.handle(makeFakeRequest())
+        expect(response).toEqual(ok('any_token'))
     })
 })
