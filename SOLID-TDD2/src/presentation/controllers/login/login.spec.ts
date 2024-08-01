@@ -67,4 +67,10 @@ describe('Login', () => {
         const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(serverError())
     })
+    it('Should call authentication with correct values', async () => {
+        const { sut, authenticationStub } = makeSut()
+        const authSpy = jest.spyOn(authenticationStub, 'authenticate')
+        await sut.handle(makeFakeRequest())
+        expect(authSpy).toHaveBeenCalledWith(makeFakeRequest().body)
+    })
 })
