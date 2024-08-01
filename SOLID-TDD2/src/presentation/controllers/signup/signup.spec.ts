@@ -1,8 +1,6 @@
-import { IAddAccount, IAddAccountModel } from "../../domain/models/add-account"
-import { IAccountModel } from "../../domain/protocols/account"
-import { MissingParamError } from "../errors/missing-param-error"
-import { badRequest, ok, serverError } from "../helpers/http/http-helpers"
-import { IValidation } from "../protocols/validator"
+import { IAddAccount, IAddAccountModel } from "../../../data/protocols/add-account"
+import { IAccountModel } from "../../../domain/models/account"
+import { MissingParamError, badRequest, ok, serverError, IValidation } from "./signup-protocols"
 import { SignUpController } from "./signup"
 
 interface SutTypes {

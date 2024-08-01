@@ -1,4 +1,4 @@
-import { IAddAccount } from "../../../domain/models/add-account";
+import { IAddAccount } from "../../../data/protocols/add-account";
 import { Controller, HttpRequest, HttpResponse, IValidation, badRequest, ok, serverError } from './signup-protocols'
 
 export class SignUpController implements Controller {
