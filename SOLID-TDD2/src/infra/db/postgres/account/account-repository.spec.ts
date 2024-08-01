@@ -16,13 +16,19 @@ const makeFakeAccount = (): IAddAccountModel => ({
 
 describe('PgAccountRepository', () => {
     beforeAll(async () => {
-        PgHelper.connect()
+        PgHelper.connect().then(() => {
+            return
+        })
     })
     afterEach(async () => {
-        await PgHelper.query('DELETE FROM users')
+        PgHelper.query('DELETE FROM users').then(() => {
+            return
+        })
     })
     afterAll(async () => {
-        PgHelper.disconnect()
+        PgHelper.disconnect().then(() => {
+            return
+        })
     })
     describe('add', () => {
 
@@ -63,6 +69,17 @@ describe('PgAccountRepository', () => {
                     expect(response?.id).toBeTruthy()
                     expect(response?.email).toBe('any_mail@mail.com')
                 })
+        })
+    })
+
+    describe('UpdateAccessToken', () => {
+        it('Should call query with correct values', async () => {
+            const sut = makeSut()
+            const querySpy = jest.spyOn(PgHelper, 'query')
+            PgHelper.query('SELECT * FROM users WHERE email = $1', ['any_mail@mail.com']).then(async (user) => {
+                await sut.update('any_id', 'any_token')
+                expect(querySpy).toHaveBeenLastCalledWith(expect.anything(), [user?.rows[0].id, 'any_token'])
+            })
         })
     })
 })
