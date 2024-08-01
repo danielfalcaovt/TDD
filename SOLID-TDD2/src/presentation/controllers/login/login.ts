@@ -1,5 +1,5 @@
 import { IAuthentication } from "../../../domain/usecases/authentication";
-import { badRequest } from "../../helpers";
+import { badRequest, serverError } from "../../helpers";
 import { Controller, HttpRequest, HttpResponse, IValidation } from "../../protocols";
 
 export class LoginController implements Controller {
@@ -8,10 +8,15 @@ export class LoginController implements Controller {
         private readonly authenticator: IAuthentication
     ){}
     async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-        const error = await this.validation.validate(httpRequest.body)
-        if (error) {
-            return new Promise(resolve => resolve(badRequest(error)))
+        try {
+            const error = await this.validation.validate(httpRequest.body)
+            if (error) {
+                return new Promise(resolve => resolve(badRequest(error)))
+            }
+            return new Promise(resolve => resolve({statusCode:200}))
+        } catch(err: any) {
+            console.log(err)
+            return serverError()
         }
-        return new Promise(resolve => resolve({statusCode:200}))
     }
 }
