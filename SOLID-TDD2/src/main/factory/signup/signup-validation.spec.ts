@@ -1,8 +1,8 @@
-import { ValidationComposite } from "../../../controllers/helpers"
-import { EmailValidation } from "../../../controllers/helpers/validators/email-validation"
-import { PasswordValidation } from "../../../controllers/helpers/validators/password-validation"
-import { RequiredFieldValidator } from "../../../controllers/helpers/validators/required-field-validator"
-import { IEmailValidator, IValidation } from "../../../controllers/protocols"
+import { ValidationComposite } from "../../../presentation/helpers"
+import { EmailValidation } from "../../../presentation/helpers/validators/email-validation"
+import { PasswordValidation } from "../../../presentation/helpers/validators/password-validation"
+import { RequiredFieldValidator } from "../../../presentation/helpers/validators/required-field-validator"
+import { IEmailValidator, IValidation } from "../../../presentation/protocols"
 import { makeSignUpValidation } from "./signup-validation"
 
 jest.mock('../../../controllers/helpers')

@@ -12,7 +12,7 @@ export const PgHelper = {
             password: env.PgPassword
 
         })
-        this.client.connect()
+        await this.client.connect()
     },
     async disconnect() {
         await this.client.end()
