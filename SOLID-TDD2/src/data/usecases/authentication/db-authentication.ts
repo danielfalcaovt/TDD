@@ -20,6 +20,7 @@ export class DbAuthentication implements IAuthentication {
         if (!result) {
             return new Promise(resolve => resolve(null))
         }
+        await this.TokenGenerator.generate(foundAccount.id)
         return new Promise(resolve => resolve(''))
     }
 }
