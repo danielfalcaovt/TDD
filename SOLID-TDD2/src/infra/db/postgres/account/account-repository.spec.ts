@@ -89,5 +89,12 @@ describe('PgAccountRepository', () => {
             const promise = sut.update('any_id', 'any_token')
             expect(promise).rejects.toThrow()
         })
+        it('Should update token on succeed', async () => {
+            const sut = makeSut()
+            PgHelper.query('INSERT INTO users(name, email, password) RETURNING *', ['any_name', 'any_mail@mail.com', 'hashed_password']).then(async (user) => {
+                await sut.update('any_id', 'any_token')
+                expect(user?.rows[0].token).toBe('any_token')
+            })
+        })
     })
 })
