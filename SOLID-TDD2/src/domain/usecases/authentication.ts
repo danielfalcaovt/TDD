@@ -4,5 +4,5 @@ export interface AuthenticationModel {
 }
 
 export interface IAuthentication {
-    authenticate(account: AuthenticationModel): Promise<string>
+    authenticate(account: AuthenticationModel): Promise<string | null>
 }
