@@ -52,4 +52,16 @@ describe('Login', () => {
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse).toEqual(badRequest(new MissingParamError('param')))
     })
+    it('Should call validation with correct parameters', async () => {
+        const { sut, validationStub } = makeSut()
+        const validationSpy = jest.spyOn(validationStub, 'validate')
+        const httpRequest = {
+            body: {
+                email: 'any_name',
+                password: 'any_password'
+            }
+        }
+        await sut.handle(httpRequest)
+        expect(validationSpy).toHaveBeenCalledWith(httpRequest.body)
+    })
 })
