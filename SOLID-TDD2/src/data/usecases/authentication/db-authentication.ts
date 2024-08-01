@@ -12,7 +12,11 @@ export class DbAuthentication implements IAuthentication {
         private readonly UpdateAccessToken: IUpdateAccessToken
     ) {}
     async authenticate(account: AuthenticationModel): Promise<string | null> {
-        await this.LoadByEmail.load(account.email)
+        const foundAccount = await this.LoadByEmail.load(account.email)
+        if (!foundAccount) {
+            return new Promise(resolve => resolve(null))
+        }
+        await this.HashComparer.compare(account.password, foundAccount.password)
         return new Promise(resolve => resolve(null))
     }
 }
