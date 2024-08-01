@@ -119,4 +119,12 @@ describe('DbAuthentication', () => {
         const response = await sut.authenticate(makeFakeRequest())
         expect(response).toBeFalsy()
     })
+    it('Should throw if HashComparer throws', async () => {
+        const { sut, HashComparer } = makeSut()
+        jest.spyOn(HashComparer, 'compare').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const promise = sut.authenticate(makeFakeRequest())
+        await expect(promise).rejects.toThrow()
+    })
 })
