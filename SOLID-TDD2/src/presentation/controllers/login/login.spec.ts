@@ -1,7 +1,7 @@
 import { AuthenticationModel, IAuthentication } from "../../../domain/usecases/authentication"
 import { MissingParamError } from "../../errors"
 import { badRequest } from "../../helpers"
-import { IValidation } from "../../protocols"
+import { HttpRequest, IValidation } from "../../protocols"
 import { LoginController } from "./login"
 
 interface SutTypes {
@@ -39,29 +39,24 @@ const makeAuthenticationStub = (): IAuthentication => {
     return new AuthenticationStub()
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+    body: {
+        email: 'any_name',
+        password: 'any_password'
+    }
+})
+
 describe('Login', () => {
     it('Should return an error if validation fail', async () => {
         const { sut, validationStub } = makeSut()
         jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('param'))
-        const httpRequest = {
-            body: {
-                email: 'any_name',
-                password: 'any_password'
-            }
-        }
-        const httpResponse = await sut.handle(httpRequest)
+        const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse).toEqual(badRequest(new MissingParamError('param')))
     })
     it('Should call validation with correct parameters', async () => {
         const { sut, validationStub } = makeSut()
         const validationSpy = jest.spyOn(validationStub, 'validate')
-        const httpRequest = {
-            body: {
-                email: 'any_name',
-                password: 'any_password'
-            }
-        }
-        await sut.handle(httpRequest)
-        expect(validationSpy).toHaveBeenCalledWith(httpRequest.body)
+        await sut.handle(makeFakeRequest())
+        expect(validationSpy).toHaveBeenCalledWith(makeFakeRequest().body)
     })
 })
