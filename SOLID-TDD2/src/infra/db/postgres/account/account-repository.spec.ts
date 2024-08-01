@@ -50,6 +50,19 @@ describe('PgAccountRepository', () => {
             await sut.load('any_mail@mail.com')
             expect(querySpy).toHaveBeenCalledWith(expect.anything(), ['any_mail@mail.com'])
         })
-
+        it('Should not return if query return null', async () => {
+            const sut = makeSut()
+            const response = await sut.load('any_mail@mail.com')
+            expect(response).toBeFalsy()
+        })
+        it('Should return an account if query returns an account', async () => {
+            PgHelper.query('INSERT INTO users(name, email, password) VALUES($1, $2, $3)', ['any_name', 'any_mail@mail.com', 'hashed_password'])
+                .then(async () => {
+                    const sut = makeSut()
+                    const response = await sut.load('any_mail@mail.com')
+                    expect(response?.id).toBeTruthy()
+                    expect(response?.email).toBe('any_mail@mail.com')
+                })
+        })
     })
 })
