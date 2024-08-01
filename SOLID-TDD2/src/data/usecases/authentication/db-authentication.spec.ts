@@ -1,3 +1,4 @@
+import { hash } from "bcrypt"
 import { AuthenticationModel } from "../../../domain/usecases/authentication"
 import { PgHelper } from "../../../infra/db/helpers/pg-helper"
 import { HttpRequest } from "../../../presentation/protocols"
@@ -111,5 +112,11 @@ describe('DbAuthentication', () => {
         const compareSpy = jest.spyOn(HashComparer, 'compare')
         await sut.authenticate(makeFakeRequest())
         expect(compareSpy).toHaveBeenCalledWith('any_password', 'hashed_password')
+    })
+    it('Should not return if HashComparer returns false', async () => {
+        const { sut, HashComparer } = makeSut()
+        jest.spyOn(HashComparer, 'compare').mockReturnValueOnce(new Promise(resolve => resolve(false)))
+        const response = await sut.authenticate(makeFakeRequest())
+        expect(response).toBeFalsy()
     })
 })
