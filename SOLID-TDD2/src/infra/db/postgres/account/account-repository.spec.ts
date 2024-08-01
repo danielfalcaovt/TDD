@@ -1,6 +1,7 @@
-import { IAddAccountModel } from "../../../../domain/models/add-account"
+import { IAddAccountModel } from "../../../../data/protocols/add-account"
 import { PgHelper } from "../../helpers/pg-helper"
 import { PgAccountRepository } from "./account-repository"
+import pg from 'pg'
 
 const makeSut = (): PgAccountRepository => {
     const sut = new PgAccountRepository()
@@ -33,7 +34,7 @@ describe('PgAccountRepository', () => {
     })
     it('Should throw if query throws', async () => {
         const sut = makeSut()
-        jest.spyOn(PgHelper, 'query').mockImplementationOnce(() => {
+        jest.spyOn(pg, 'Pool').mockImplementationOnce(() => {
             throw new Error()
         })
         const promise = sut.add(makeFakeAccount())

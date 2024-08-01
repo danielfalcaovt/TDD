@@ -5,7 +5,7 @@ import { RequiredFieldValidator } from "../../../presentation/helpers/validators
 import { IEmailValidator, IValidation } from "../../../presentation/protocols"
 import { makeSignUpValidation } from "./signup-validation"
 
-jest.mock('../../../controllers/helpers')
+jest.mock('../../../presentation/helpers')
 
 describe('Make Signup Validation', () => {
     it('Should call Validation Composite with correct values', async () => {

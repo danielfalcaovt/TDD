@@ -1,6 +1,14 @@
-import { IAccountModel } from "../../../domain/models/account"
+import { AuthenticationModel, IAuthentication } from "../../../domain/usecases/authentication"
 import { MissingParamError } from "../../errors"
+import { badRequest } from "../../helpers"
 import { IValidation } from "../../protocols"
+import { LoginController } from "./login"
+
+interface SutTypes {
+    sut: LoginController
+    authenticationStub: IAuthentication
+    validationStub: IValidation
+}
 
 const makeSut = (): SutTypes => {
     const validationStub = makeValidationStub()
@@ -42,6 +50,6 @@ describe('Login', () => {
             }
         }
         const httpResponse = await sut.handle(httpRequest)
-        expect(httpResponse).toEqual(new MissingParamError('param'))
+        expect(httpResponse).toEqual(badRequest(new MissingParamError('param')))
     })
 })
