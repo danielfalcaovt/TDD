@@ -1,6 +1,6 @@
 import { AuthenticationModel, IAuthentication } from "../../../domain/usecases/authentication"
 import { MissingParamError } from "../../errors"
-import { badRequest } from "../../helpers"
+import { badRequest, serverError } from "../../helpers"
 import { HttpRequest, IValidation } from "../../protocols"
 import { LoginController } from "./login"
 
@@ -58,5 +58,13 @@ describe('Login', () => {
         const validationSpy = jest.spyOn(validationStub, 'validate')
         await sut.handle(makeFakeRequest())
         expect(validationSpy).toHaveBeenCalledWith(makeFakeRequest().body)
+    })
+    it('Should return 500 if validation throws', async () => {
+        const { sut, validationStub } = makeSut()
+        jest.spyOn(validationStub, 'validate').mockImplementationOnce(() => {
+            throw new Error()
+        })
+        const httpResponse = await sut.handle(makeFakeRequest())
+        expect(httpResponse).toEqual(serverError())
     })
 })
