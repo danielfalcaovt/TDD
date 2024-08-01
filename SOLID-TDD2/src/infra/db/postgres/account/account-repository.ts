@@ -3,8 +3,9 @@ import { IAddAccountModel } from "../../../../data/protocols/db/add-account";
 import { IAccountModel } from "../../../../domain/models/account";
 import { PgHelper } from "../../helpers/pg-helper";
 import { ILoadByEmail } from "../../../../data/protocols/db/load-by-email";
+import { IUpdateAccessToken } from "../../../../data/protocols/db/update-access-token";
 
-export class PgAccountRepository implements IAddAccountRepository, ILoadByEmail {
+export class PgAccountRepository implements IAddAccountRepository, ILoadByEmail, IUpdateAccessToken {
     async add(account: IAddAccountModel): Promise<IAccountModel> {
         await PgHelper.connect()
         const user = await PgHelper.query("INSERT INTO users(name, email, password) VALUES($1, $2, $3) RETURNING *", [account.name, account.email, account.password])
@@ -22,5 +23,9 @@ export class PgAccountRepository implements IAddAccountRepository, ILoadByEmail 
         }else {
             return new Promise(resolve => resolve(null))
         }
+    }
+
+    async update(id: string, token: string): Promise<void> {
+        await PgHelper.query("UPDATE users SET token = $2 WHERE id = $1", [id, token])
     }
 }
