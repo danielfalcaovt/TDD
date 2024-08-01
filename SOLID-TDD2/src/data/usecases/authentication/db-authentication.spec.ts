@@ -141,4 +141,10 @@ describe('DbAuthentication', () => {
         const promise = sut.authenticate(makeFakeRequest())
         await expect(promise).rejects.toThrow()
     })
+    it('Should call UpdateAccessToken with correct values', async () => {
+        const { sut, UpdateAccessToken } = makeSut()
+        const updateSpy = jest.spyOn(UpdateAccessToken, 'update')
+        await sut.authenticate(makeFakeRequest())
+        expect(updateSpy).toHaveBeenCalledWith('any_id', 'any_token')
+    })
 })
