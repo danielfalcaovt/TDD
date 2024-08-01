@@ -38,7 +38,7 @@ const makeLoadByEmailStub = (): ILoadByEmail => {
                 email: 'any_mail@mail.com',
                 id: 'any_id',
                 name: 'any_name',
-                password: 'any_password'
+                password: 'hashed_password'
             }))
         }
     }
@@ -105,5 +105,11 @@ describe('DbAuthentication', () => {
         })
         const promise = sut.authenticate(makeFakeRequest())
         await expect(promise).rejects.toThrow()
+    })
+    it('Should call HashComparer with correct values', async () => {
+        const { sut, HashComparer } = makeSut()
+        const compareSpy = jest.spyOn(HashComparer, 'compare')
+        await sut.authenticate(makeFakeRequest())
+        expect(compareSpy).toHaveBeenCalledWith('any_password', 'hashed_password')
     })
 })
