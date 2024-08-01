@@ -13,6 +13,7 @@ export class LoginController implements Controller {
             if (error) {
                 return new Promise(resolve => resolve(badRequest(error)))
             }
+            await this.authenticator.authenticate(httpRequest.body)
             return new Promise(resolve => resolve({statusCode:200}))
         } catch(err: any) {
             console.log(err)
