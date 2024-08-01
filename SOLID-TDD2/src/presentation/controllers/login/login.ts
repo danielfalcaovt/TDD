@@ -1,5 +1,5 @@
 import { IAuthentication } from "../../../domain/usecases/authentication";
-import { badRequest, serverError, unauthorized } from "../../helpers";
+import { badRequest, ok, serverError, unauthorized } from "../../helpers";
 import { Controller, HttpRequest, HttpResponse, IValidation } from "../../protocols";
 
 export class LoginController implements Controller {
@@ -17,7 +17,7 @@ export class LoginController implements Controller {
             if (!user) {
                 return unauthorized()
             }
-            return new Promise(resolve => resolve({statusCode:200}))
+            return new Promise(resolve => resolve(ok(user)))
         } catch(err: any) {
             console.log(err)
             return serverError()
