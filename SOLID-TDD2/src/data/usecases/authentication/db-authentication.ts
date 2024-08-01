@@ -22,6 +22,6 @@ export class DbAuthentication implements IAuthentication {
         }
         const token = await this.TokenGenerator.generate(foundAccount.id)
         await this.UpdateAccessToken.update(foundAccount.id, token)
-        return new Promise(resolve => resolve(''))
+        return new Promise(resolve => resolve(token))
     }
 }
