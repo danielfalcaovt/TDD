@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Controller } from "../../controllers/protocols";
+import { Controller } from "../../presentation/protocols";
 
 export const routeAdapter = (controller: Controller) => {
     return async (req: Request, res: Response) => {
