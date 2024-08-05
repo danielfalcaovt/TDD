@@ -13,6 +13,7 @@ export class LoginController implements Controller {
             if (error) {
                 return new Promise(resolve => resolve(badRequest(error)))
             }
+            console.log(httpRequest.body)
             const user = await this.authenticator.authenticate(httpRequest.body)
             if (!user) {
                 return unauthorized()

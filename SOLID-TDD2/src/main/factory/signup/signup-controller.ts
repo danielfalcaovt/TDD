@@ -1,7 +1,7 @@
 import { SignUpController } from "../../../presentation/controllers/signup/signup"
 import { DbAddAccount } from "../../../data/usecases/add-account/db-add-account-protocols"
 import { PgAccountRepository } from "../../../infra/db/postgres/account/account-repository"
-import { BcryptAdapter } from '../../../infra/criptography/bcrypt-adapter'
+import { BcryptAdapter } from '../../../infra/criptography/bcrypt/bcrypt-adapter'
 import { makeSignUpValidation } from "./signup-validation"
 
 export const makeSignUpController = (): SignUpController => {

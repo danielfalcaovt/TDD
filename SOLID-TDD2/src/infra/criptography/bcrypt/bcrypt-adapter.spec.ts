@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter'
+import { PgHelper } from '../../db/helpers/pg-helper'
 
 jest.mock('bcrypt', () => ({
     hash() {
@@ -13,6 +14,21 @@ jest.mock('bcrypt', () => ({
 const salt = 12
 
 describe('Bcrypt Adapter', () => {
+    beforeAll(async () => {
+        PgHelper.connect().then(() => {
+            return
+        })
+    })
+    beforeEach(async () => {
+        PgHelper.query('DELETE FROM users').then(() => {
+            return
+        })
+    })
+    afterAll(async () => {
+        PgHelper.disconnect().then(() => {
+            return
+        })
+    })
     it('Should call hash with correct values', async () => {
         const sut = new BcryptAdapter(salt)
         const hashSpy = jest.spyOn(bcrypt, 'hash')

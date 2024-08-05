@@ -79,14 +79,6 @@ const makeFakeRequest = (): AuthenticationModel => ({
 })
 
 describe('DbAuthentication', () => {
-    beforeAll(async () => {
-        PgHelper.connect()
-    })
-
-    afterAll(async () => {
-        PgHelper.disconnect()
-    })
-
     it('Should call loadByEmail with correct value', async () => {
         const { sut, LoadByEmail } = makeSut()
         const loadSpy = jest.spyOn(LoadByEmail, 'load')
@@ -99,7 +91,7 @@ describe('DbAuthentication', () => {
         const response = await sut.authenticate(makeFakeRequest())
         expect(response).toBeFalsy()
     })
-    it('Should throw if loadByEmail throws', async () => { 
+    it('Should throw if loadByEmail throws', async () => {
         const { sut, LoadByEmail } = makeSut()
         jest.spyOn(LoadByEmail, 'load').mockImplementationOnce(() => {
             throw new Error()

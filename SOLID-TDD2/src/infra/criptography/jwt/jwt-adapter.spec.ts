@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { JwtAdapter } from './jwt-adapter'
+import { PgHelper } from '../../db/helpers/pg-helper'
 
 jest.mock('jsonwebtoken', () => ({
     sign() {
@@ -9,6 +10,23 @@ jest.mock('jsonwebtoken', () => ({
 
 describe('JwtAdapter', () => {
     const jwtSecret = 'secret'
+    beforeAll(async () => {
+        PgHelper.connect().then(() => {
+            return
+        })
+    })
+
+    beforeEach(async () => {
+        PgHelper.query('DELETE FROM users').then(() => {
+            return
+        })
+    })
+
+    afterAll(async () => {
+        PgHelper.disconnect().then(() => {
+            return
+        })
+    })
     it ('Should call sign with correct values', async () => {
         const sut = new JwtAdapter(jwtSecret)
         const signSpy = jest.spyOn(jwt, 'sign')

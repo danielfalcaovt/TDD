@@ -4,13 +4,19 @@ import request from 'supertest'
 
 describe('SignUp Routes', () => {
     beforeAll(async () => {
-        await PgHelper.connect()
+        PgHelper.connect().then(() => {
+            return
+        })
     })
     beforeEach(async () => {
-        await PgHelper.query('DELETE FROM users')
+        PgHelper.query('DELETE FROM users').then(() => {
+            return
+        })
     })
     afterAll(async () => {
-        PgHelper.disconnect()
+        PgHelper.disconnect().then(() => {
+            return
+        })
     })
     it('Should return an account on ok', async () => {
         const response = await request(app)

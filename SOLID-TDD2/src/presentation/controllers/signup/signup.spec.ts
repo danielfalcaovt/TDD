@@ -1,7 +1,8 @@
-import { IAddAccount, IAddAccountModel } from "../../../data/protocols/add-account"
+import { IAddAccount, IAddAccountModel } from "../../../data/protocols/db/add-account"
 import { IAccountModel } from "../../../domain/models/account"
 import { MissingParamError, badRequest, ok, serverError, IValidation } from "./signup-protocols"
 import { SignUpController } from "./signup"
+import { PgHelper } from "../../../infra/db/helpers/pg-helper"
 
 interface SutTypes {
     sut: SignUpController
@@ -59,6 +60,24 @@ const makeFakeRequest = () => ({
     }
 })
 describe('SignUp CTL', () => {
+    beforeAll(async () => {
+        PgHelper.connect().then(() => {
+            return
+        })
+    })
+
+    afterEach(async () => {
+        PgHelper.query('DELETE FROM users').then(() => {
+            return
+        })
+    })
+    
+    afterAll(async () => {
+        PgHelper.disconnect().then(() => {
+            return
+        })
+    })
+
     it('Should return error if validation returns an error', async () => {
         const { sut, validatorStub } = makeSut()
         jest.spyOn(validatorStub, 'validate').mockReturnValueOnce(new MissingParamError('name'))
